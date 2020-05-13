@@ -33,6 +33,20 @@ app.get("/login", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("register");
 });
+app.post("/register", (req, res) => {
+  const newUser = new User({
+    email: req.body.username,
+    password: req.body.password,
+  });
+
+  newUser.save((e) => {
+    if (e) {
+      console.log(e);
+    } else {
+      res.render("secrets");
+    }
+  });
+});
 
 app.listen(3000, () => {
   console.log("Server is up at port 3000");
