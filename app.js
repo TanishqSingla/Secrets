@@ -29,6 +29,22 @@ app.get("/home", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  User.findOne({ email: username }, (e, foundUser) => {
+    if (e) {
+      console.log(e);
+    } else {
+      if (foundUser) {
+        if (foundUser.password === password) {
+          res.render("/secrets");
+        }
+      }
+    }
+  });
+});
 
 app.get("/register", (req, res) => {
   res.render("register");
